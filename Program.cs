@@ -81,7 +81,25 @@ namespace MapExporter
         /// </summary>
         private static void PrintImport()
         {
-
+            Console.Clear();
+            Console.WriteLine("Import a Map");
+            NewLine();
+            Console.Write("Resource Path: ");
+            string path = Console.ReadLine();
+            Console.WriteLine("Confirm Resource Path: " + path);
+            Console.WriteLine("Y/N");
+            string input = Console.ReadLine();
+            if (input.ToUpper() == "Y")
+                LoadMap(path);
+            else
+            {
+                Console.WriteLine("Resource not found. Restart? Y/N");
+                string reInput = Console.ReadLine();
+                if (reInput.ToUpper() == "Y")
+                    PrintImport();
+                else
+                    ReturnToStart();
+            }
         }
 
         /// <summary>
@@ -96,6 +114,7 @@ namespace MapExporter
             Console.WriteLine("> import");
             Console.WriteLine("> help");
             NewLine();
+            Start();
         }
 
         /// <summary>
@@ -133,6 +152,14 @@ namespace MapExporter
         {
             Console.Clear();
             Start();
+        }
+
+        /// <summary>
+        /// Serializes and loads the specified resource.
+        /// </summary>
+        private static void LoadMap(string path)
+        {
+
         }
     }
 }
