@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
 
 namespace MapExporter
 {
@@ -143,6 +145,11 @@ namespace MapExporter
             string path = Console.ReadLine();
             Console.WriteLine("Confirm export destination path: " + path);
             Console.WriteLine("Y/N");
+            string input = Console.ReadLine();
+            if (input.ToUpper() == "Y")
+                Export(exportWorld.Map, path);
+            else
+                ReturnToStart();
         }
 
         /// <summary>
@@ -159,7 +166,52 @@ namespace MapExporter
         /// </summary>
         private static void LoadMap(string path)
         {
+            Console.Clear();
+            Console.WriteLine("Importing Map...");
 
+            Map map = JsonConvert.DeserializeObject<Map>(File.ReadAllText(path));
+            //using (StreamReader rdr = File.OpenText(path))
+            //{
+            //    JsonSerializer serializer = new JsonSerializer();
+            //    Map mapS = (Map)serializer.Deserialize(rdr, typeof(Map));
+            //}
+            Console.WriteLine("Map Succesfully Imported.");
+            NewLine();
+            Console.WriteLine("Map Data:");
+            Console.WriteLine("Map Name: " + map.Name);
+            Console.WriteLine("Map Width: " + map.Width);
+            Console.WriteLine("Map Height: " + map.Height);
+            NewLine();
+            Console.WriteLine("Type [C] to continue.");
+            string input = Console.ReadLine();
+            if (input.ToUpper() == "C")
+                ReturnToStart();
+        }
+
+        /// <summary>
+        /// Serializes and exports the map to the specified destination.
+        /// </summary>
+        /// <param name="map"></param>
+        /// <param name="path"></param>
+        private static void Export(Map map, string path)
+        {
+            Console.Clear();
+            Console.WriteLine("Exporting Map...");
+            NewLine();
+
+            File.WriteAllText(path + map.Name + "_export.json", JsonConvert.SerializeObject(map));
+
+            //using (StreamWriter writer = File.CreateText(path + map.Name + "_export.json"))
+            //{
+            //    JsonSerializer serializer = new JsonSerializer();
+            //    serializer.Serialize(writer, map);
+            //}
+
+            Console.WriteLine("Map Exported Succesfully.");
+            Console.WriteLine("Type [C] to continue.");
+            string input = Console.ReadLine();
+            if (input.ToUpper() == "C")
+                ReturnToStart();
         }
     }
 }
