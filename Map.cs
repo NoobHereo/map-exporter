@@ -2,6 +2,9 @@
 
 namespace MapExporter
 {
+    /// <summary>
+    /// The Map class holds information regarding the properties of a World's map.
+    /// </summary>
     public class Map
     {
         public string Name { get; private set; }

@@ -13,6 +13,9 @@ namespace MapExporter
                 Console.ReadLine();
         }
 
+        /// <summary>
+        /// Prints the start screen text.
+        /// </summary>
         private static void Start()
         {           
             Console.WriteLine("Map Exporter Status [READY]");
@@ -42,6 +45,9 @@ namespace MapExporter
             }
         }
 
+        /// <summary>
+        /// Prints the screen text for exporting a map and filling in the blanks for needed map information.
+        /// </summary>
         private static void PrintExport()
         {
             Console.Clear();
@@ -70,21 +76,42 @@ namespace MapExporter
 
         }
 
+        /// <summary>
+        /// Prints the screen text for importing a map.
+        /// </summary>
         private static void PrintImport()
         {
 
         }
 
+        /// <summary>
+        /// Prints available commands for the exporter.
+        /// </summary>
         private static void PrintHelp()
         {
-
+            NewLine();
+            Console.WriteLine("Available Commands:");
+            NewLine();
+            Console.WriteLine("> export");
+            Console.WriteLine("> import");
+            Console.WriteLine("> help");
+            NewLine();
         }
 
+        /// <summary>
+        /// Prints a newline. This is very janky :)
+        /// </summary>
         private static void NewLine()
         {
             Console.WriteLine("");
         }
 
+        /// <summary>
+        /// Prints the screen text needed for specifying the destination path that the map file is exported to.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         private static void PrintExportDest(string name, int width, int height)
         {
             World exportWorld = new World();
@@ -99,6 +126,9 @@ namespace MapExporter
             Console.WriteLine("Y/N");
         }
 
+        /// <summary>
+        /// Returns to the exporter start menu.
+        /// </summary>
         private static void ReturnToStart()
         {
             Console.Clear();
