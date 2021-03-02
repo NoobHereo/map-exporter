@@ -55,8 +55,6 @@ namespace MapExporter
             Console.Clear();
             Console.WriteLine("Export a Map");
             NewLine();
-            Console.Write("Map Name: ");
-            string name = Console.ReadLine();
             Console.Write("Map Width: ");
             string mw = Console.ReadLine();
             int width = int.Parse(mw);
@@ -65,14 +63,13 @@ namespace MapExporter
             int height = int.Parse(mh);
             NewLine();
             Console.WriteLine("Map Details:");
-            Console.WriteLine("Name: " + name);
             Console.WriteLine("Width: " + mw);
             Console.WriteLine("Height: " + mh);
             NewLine();
             Console.WriteLine("Confirm Map Details & Proceed to Export? Y/N");
             string input = Console.ReadLine();
             if (input.ToUpper() == "Y")            
-                PrintExportDest(name, width, height);           
+                PrintExportDest(width, height);           
             else
                 ReturnToStart();
 
@@ -133,10 +130,10 @@ namespace MapExporter
         /// <param name="name"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        private static void PrintExportDest(string name, int width, int height)
+        private static void PrintExportDest(int width, int height)
         {
             World exportWorld = new World();
-            exportWorld.Map = new Map(name, width, height);
+            exportWorld.Map = new Map(width, height);
 
             Console.Clear();
             Console.WriteLine("Export a Map to destination");
@@ -146,8 +143,10 @@ namespace MapExporter
             Console.WriteLine("Confirm export destination path: " + path);
             Console.WriteLine("Y/N");
             string input = Console.ReadLine();
+            Console.Write("File Name: ");
+            string name = Console.ReadLine();
             if (input.ToUpper() == "Y")
-                Export(exportWorld.Map, path);
+                Export(exportWorld.Map, path, name);
             else
                 ReturnToStart();
         }
@@ -178,7 +177,6 @@ namespace MapExporter
             Console.WriteLine("Map Succesfully Imported.");
             NewLine();
             Console.WriteLine("Map Data:");
-            Console.WriteLine("Map Name: " + map.Name);
             Console.WriteLine("Map Width: " + map.Width);
             Console.WriteLine("Map Height: " + map.Height);
             NewLine();
@@ -193,19 +191,13 @@ namespace MapExporter
         /// </summary>
         /// <param name="map"></param>
         /// <param name="path"></param>
-        private static void Export(Map map, string path)
+        private static void Export(Map map, string path, string fileName)
         {
             Console.Clear();
             Console.WriteLine("Exporting Map...");
             NewLine();
 
-            File.WriteAllText(path + map.Name + "_export.json", JsonConvert.SerializeObject(map));
-
-            //using (StreamWriter writer = File.CreateText(path + map.Name + "_export.json"))
-            //{
-            //    JsonSerializer serializer = new JsonSerializer();
-            //    serializer.Serialize(writer, map);
-            //}
+            File.WriteAllText(path + fileName + "_export.json", JsonConvert.SerializeObject(map));
 
             Console.WriteLine("Map Exported Succesfully.");
             Console.WriteLine("Type [C] to continue.");
